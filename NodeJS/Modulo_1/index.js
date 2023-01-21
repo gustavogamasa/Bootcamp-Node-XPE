@@ -9,36 +9,42 @@ async function brandWithMostCars(carList) {
 
     const dados = JSON.parse(carList);
 
-    const array = [];
 
-    dados.forEach(element => {
-        // console.log(element.brand+" tem "+(element.models).length);
-        array.push([element.brand, (element.models).length ])
-    });
-    
-    console.log(array);
+    //Procurar maior numero de modelos
+    const maiorNumero = Math.max(...dados.map(element => {
+        return element.models.length
+    }));
 
-    const brandComMaisModels = Math.max(...array[1]);
-    console.log(brandComMaisModels);
+    console.log(maiorNumero);
 
-    
+    //Procurar brand com maior numero
 
+    const brandMaisModelos = dados.filter(element => element.models.length === maiorNumero);
+    console.log(brandMaisModelos);
 
 
-
-
-
-    // const numeroModels = Math.max(...dados.map(modelo => {
-    //     return modelo.models.length
-    // }));
-
-    // const brandComMaisModels = dados.filter(item => item.models.length === numeroModels)
-    // console.log(brandComMaisModels);
 
 
 
 
 }
+
+
+
+
+
+
+// const numeroModels = Math.max(...dados.map(modelo => {
+//     return modelo.models.length
+// }));
+
+// const brandComMaisModels = dados.filter(item => item.models.length === numeroModels)
+// console.log(brandComMaisModels);
+
+
+
+
+
 
 async function readFile() {
 
