@@ -1,9 +1,9 @@
-import {promises as fs} from "fs";
+import { promises as fs } from "fs";
 
-let dados = readFile();
+const dados = JSON.parse(await readFile());
 
 
-export async function maisModelos() {
+export function maisModelos (req, res)  {
 
     const maiorQtd = Math.max(...dados.map(item => {
         return item.models.length;
