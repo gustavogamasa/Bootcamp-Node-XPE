@@ -9,8 +9,19 @@ async function brandWithMostCars(carList) {
 
     const dados = JSON.parse(carList);
 
+    const array = [];
 
+    dados.forEach(element => {
+        // console.log(element.brand+" tem "+(element.models).length);
+        array.push([element.brand, (element.models).length ])
+    });
+    
+    console.log(array);
 
+    const brandComMaisModels = Math.max(...array[1]);
+    console.log(brandComMaisModels);
+
+    
 
 
 
