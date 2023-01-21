@@ -185,7 +185,22 @@ app.post("/marcas/listaModelos", async (req, res) => {
         if ((item.brand).toLowerCase() === nomeMarca.toLowerCase()) return item;
     })
 
-    return res.json(marcaEncontrada)
+    //Organiza o retorno
+    let result
+    if (marcaEncontrada.length > 0) {
+
+        result = marcaEncontrada.map(item => {
+            return (
+                res.json({
+                    Marca: item.brand,
+                    Modelos: item.models
+                })
+            )
+        })
+    } else result = res.json({});
+
+
+    return result;
 
 })
 
