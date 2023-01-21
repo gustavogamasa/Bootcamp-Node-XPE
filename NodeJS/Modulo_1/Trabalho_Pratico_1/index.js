@@ -99,14 +99,42 @@ app.get("/marca-com-menos-modelos", async (req, res) => {
 
 })
 
+app.get("/listar-marcas-menos-modelos", async (req, res) => {
+
+    const qtdMarcas = req.query.numeroMarcas;
+    const dados = JSON.parse(await readFile());
+
+    const menores = dados.sort(function compare(item1, item2) {
+        if (item1.models.length < item2.models.length) return -1;
+        if (item1.models.length > item2.models.length) return 1;
+        return 0
+    });
+
+    let menoresSlice = (menores.slice(0, qtdMarcas));
+
+    let result = res.json(menoresSlice.map(item => {
+        return ({
+            Marca: item.brand,
+            Modelos: item.models.length
+        })
+    }))
+
+    return result;
+
+
+
+
+
+})
+
 app.get("/listar-marcas-mais-modelos", async (req, res) => {
 
     const qtdMarcas = req.query.numeroMarcas;
     const dados = JSON.parse(await readFile());
 
     const maiores = dados.sort(function compare(item1, item2) {
-        if (item1.models.length < item2.models.length) return -1;
-        if (item1.models.length > item2.models.length) return 1;
+        if (item1.models.length > item2.models.length) return -1;
+        if (item1.models.length < item2.models.length) return 1;
         return 0
     });
 
@@ -119,20 +147,13 @@ app.get("/listar-marcas-mais-modelos", async (req, res) => {
         })
     }))
 
-
-
-
     return result;
 
-    // listar maiores brands
-    // pegar os x primeiros itens
 
 
 
 
 })
-
-
 
 
 
