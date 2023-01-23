@@ -45,8 +45,8 @@ export async function updateOrder(req, res) {
     const {id} = req.query;
     console.log(id);
 
-    const pedido = await dados.pedidos.filter(function(item) {
-        if (item.id == id) return item
+    const pedido = await dados.pedidos.find(item => {
+        if(item.id == id) return item
     })
 
     console.log(pedido);
