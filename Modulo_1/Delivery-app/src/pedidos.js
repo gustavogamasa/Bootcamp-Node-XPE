@@ -172,18 +172,16 @@ export async function totalCliente(req, res) {
 export async function prodMaisVendidos(req, res) {
 
 
-    const prodMaisVendido = await dados.pedidos.map(pedido => {
+    const todosProdutos = await dados.pedidos.map(pedido => {
 
         try {
-                    
-
+            return pedido.produto;
         } catch (error) {
-            console.log("Pedido: " + pedido.id + " ");
+            console.log("Pedido: " + pedido.id + " sem produto");
         }
-
     })
 
-
+    return res.json(todosProdutos)
 
 }
 
