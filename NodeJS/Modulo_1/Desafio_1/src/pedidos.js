@@ -137,7 +137,6 @@ export async function consultarOrder(req, res) {
 }
 
 
-
 export async function totalCliente(req, res) {
 
     const { cliente } = req.body;
@@ -146,26 +145,47 @@ export async function totalCliente(req, res) {
 
         try {
 
-            if ((pedido.cliente).toLowerCase() === cliente.toLowerCase()) {
-                // console.log("Achou")
+            if ((pedido.cliente).toLowerCase() == cliente.toLowerCase()) {
+                return pedido;
             }
 
         } catch (error) {
             console.log("Pedido " + pedido.id + " sem cliente");
-
         }
 
+    }) // FILTER pedido
 
-
-
-
+    const valores = await pedidos.map(item => {
+        if (item.valor) {
+            console.log(item.valor);
+            return item.valor;
+        }
     })
 
-    return res.json(pedidos);
+    const total = valores.reduce((accumulator, current) => accumulator + current);
+
+    return res.json(total)
 
 
 }
 
+export async function prodMaisVendidos(req, res) {
+
+
+    const prodMaisVendido = await dados.pedidos.map(pedido => {
+
+        try {
+                    
+
+        } catch (error) {
+            console.log("Pedido: " + pedido.id + " ");
+        }
+
+    })
+
+
+
+}
 
 
 
