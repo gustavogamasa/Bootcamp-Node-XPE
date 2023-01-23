@@ -26,12 +26,12 @@ export async function createOrder(req, res) {
     })
 
     dados.pedidos.push(newJson);
-    dados.nextId = nextID +1;
+    dados.nextId = nextID + 1;
 
     await fs.writeFile("./db/pedidos.json", JSON.stringify(dados));
-    console.log("--- Pedido ID:"+nextID+" adicionado");
+    console.log("--- Pedido ID:" + nextID + " adicionado");
 
-    
+
 
     return res.json(
         await dados.pedidos.find(item => item.id === nextID)
@@ -42,16 +42,27 @@ export async function createOrder(req, res) {
 
 export async function updateOrder(req, res) {
 
-    const {id} = req.query;
+    const { id } = req.query;
     console.log(id);
 
-    const pedido = await dados.pedidos.find(item => {
-        if(item.id == id) return item
+    // FALTA VERIFICAR ERRO , se nãoe xistir
+
+    dados.pedidos[(id-1)] = ({
+
+        id: id,
+        cliente: "Nome atualizado",
+        produto: "Nome atualizado",
+        valor: "Nome atualizado",
+        entregue: false,
+        timestamp: "Nome atualizado"
+
     })
 
-    console.log(pedido);
+    await fs.writeFile("./db/pedidos.json", JSON.stringify(dados));
 
-    return res.json(pedido)
+    console.log(dados.pedidos[id]);
+
+    return res.json(dados.pedidos[id])
 
     // const newJson = ({
     //     id: id,
@@ -68,7 +79,7 @@ export async function updateOrder(req, res) {
     // await fs.writeFile("./db/pedidos.json", JSON.stringify(dados));
     // console.log("--- Pedido ID:"+nextID+" adicionado");
 
-    
+
 
     // return res.json(
     //     await dados.pedidos.find(item => item.id === nextID)
