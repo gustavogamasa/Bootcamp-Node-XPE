@@ -121,9 +121,69 @@ export async function deleteOrder(req, res) {
 
 }
 
+export async function consultarOrder(req, res) {
+
+    const { id } = req.body;
+
+    if (dados.pedidos.find(pedidos => pedidos.id === id)) {
+
+        return res.json(dados.pedidos[id - 1])
+
+    } else {
+        console.log("Pedido não encontrado");
+        return res.status(400).send("Not Found");
+    }
+
+}
 
 
+export async function totalCliente(req, res) {
 
+    const { cliente } = req.body;
+
+    const pedidos = await dados.pedidos.filter(pedido => {
+
+        try {
+
+            if ((pedido.cliente).toLowerCase() == cliente.toLowerCase()) {
+                return pedido;
+            }
+
+        } catch (error) {
+            console.log("Pedido " + pedido.id + " sem cliente");
+        }
+
+    }) // FILTER pedido
+
+    const valores = await pedidos.map(item => {
+        if (item.valor) {
+            console.log(item.valor);
+            return item.valor;
+        }
+    })
+
+    const total = valores.reduce((accumulator, current) => accumulator + current);
+
+    return res.json(total)
+
+
+}
+
+export async function prodMaisVendidos(req, res) {
+
+
+    const todosProdutos = await dados.pedidos.map(pedido => {
+
+        try {
+            return pedido.produto;
+        } catch (error) {
+            console.log("Pedido: " + pedido.id + " sem produto");
+        }
+    })
+
+    return res.json(todosProdutos)
+
+}
 
 
 
