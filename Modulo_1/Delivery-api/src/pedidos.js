@@ -171,7 +171,6 @@ export async function totalCliente(req, res) {
 
 export async function prodMaisVendidos(req, res) {
 
-
     const todosProdutos = await dados.pedidos.map(pedido => {
 
         try {
@@ -181,7 +180,23 @@ export async function prodMaisVendidos(req, res) {
         }
     })
 
-    return res.json(todosProdutos)
+    const resumo = [prod, qtd];
+
+    todosProdutos.forEach(item => {
+
+        if(resumo.includes(item)){
+            
+            
+
+        } else {
+            
+            resumo.push({produto: item, qtd: 1})
+        }
+        
+    });
+
+
+    return res.json(resumo)
 
 }
 
