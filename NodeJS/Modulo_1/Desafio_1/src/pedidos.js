@@ -127,7 +127,7 @@ export async function consultarOrder(req, res) {
 
     if (dados.pedidos.find(pedidos => pedidos.id === id)) {
 
-        return res.json(dados.pedidos[id-1])
+        return res.json(dados.pedidos[id - 1])
 
     } else {
         console.log("Pedido não encontrado");
@@ -136,6 +136,35 @@ export async function consultarOrder(req, res) {
 
 }
 
+
+
+export async function totalCliente(req, res) {
+
+    const { cliente } = req.body;
+
+    const pedidos = await dados.pedidos.filter(pedido => {
+
+        try {
+
+            if ((pedido.cliente).toLowerCase() === cliente.toLowerCase()) {
+                // console.log("Achou")
+            }
+
+        } catch (error) {
+            console.log("Pedido " + pedido.id + " sem cliente");
+
+        }
+
+
+
+
+
+    })
+
+    return res.json(pedidos);
+
+
+}
 
 
 

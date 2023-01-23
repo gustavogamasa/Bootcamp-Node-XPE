@@ -667,6 +667,7 @@
     },
     {
       "id": 84,
+      "cliente": "Heloísa Sobreira",
       "produto": "Pizza Pepperoni",
       "valor": 32.5,
       "entregue": true,
@@ -994,6 +995,7 @@
     },
     {
       "id": 125,
+      "cliente": "Heloísa Sobreira",
       "produto": "Pizza Calabresa",
       "valor": 30.5,
       "entregue": false,
@@ -1042,6 +1044,7 @@
     {
       "id": 131,
       "produto": "Pizza Napolitana",
+      "cliente": "Heloísa Sobreira",
       "valor": 28,
       "entregue": true,
       "timestamp": "2021-05-02T19:48:09.766Z"
