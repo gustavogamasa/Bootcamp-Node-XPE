@@ -1,8 +1,11 @@
 import express, { json } from "express";
 import { promises as fs } from "fs";
+import { router } from "./routes/index.js";
+
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(router);
 
 
 
@@ -14,47 +17,47 @@ app.get("/file", async (req, res) => {
 })
 
 
-app.get("/marcas/maisModelos", async (req, res) => {
+// app.get("/marcas/maisModelos", async (req, res) => {
 
-    const dados = JSON.parse(await readFile());
+//     const dados = JSON.parse(await readFile());
 
-    // Procurar maior quantidade
-    const maiorQtd = Math.max(...dados.map(item => {
-        return item.models.length;
-    }));
+//     // Procurar maior quantidade
+//     const maiorQtd = Math.max(...dados.map(item => {
+//         return item.models.length;
+//     }));
 
-    // Encontrar marca com essa quantidade
-    const marcaMaiorQtd = dados.filter(item => item.models.length === maiorQtd)
+//     // Encontrar marca com essa quantidade
+//     const marcaMaiorQtd = dados.filter(item => item.models.length === maiorQtd)
 
-    let result;
+//     let result;
 
-    // Se houver empate
-    if (marcaMaiorQtd.length > 1) {
+//     // Se houver empate
+//     if (marcaMaiorQtd.length > 1) {
 
-        result = res.json(marcaMaiorQtd.map(item => {
-            return ({
-                Marca_com_mais_modelos: item.brand,
-                Quantidade_Modelos: item.models.length
-            });
-        }))
-
-
-
-    } // Se não houver empate
-    else {
-
-        result = res.json({
-            Marca_com_mais_modelos: marcaMaiorQtd[0].brand,
-            Quantidade_Modelos: marcaMaiorQtd[0].models.length
-        })
-
-    }
+//         result = res.json(marcaMaiorQtd.map(item => {
+//             return ({
+//                 Marca_com_mais_modelos: item.brand,
+//                 Quantidade_Modelos: item.models.length
+//             });
+//         }))
 
 
-    return result;
+
+//     } // Se não houver empate
+//     else {
+
+//         result = res.json({
+//             Marca_com_mais_modelos: marcaMaiorQtd[0].brand,
+//             Quantidade_Modelos: marcaMaiorQtd[0].models.length
+//         })
+
+//     }
 
 
-})
+//     return result;
+
+
+// })
 
 app.get("/marcas/menosModelos", async (req, res) => {
 
@@ -179,6 +182,7 @@ app.post("/marcas/listaModelos", async (req, res) => {
     const nomeMarca = req.body.nomeMarca;
 
     const dados = JSON.parse(await readFile());
+    console.log(nomeMarca);
 
     // Busca por nome, converte tudo para lowerCase para a busca não ser afetada pelo case
     const marcaEncontrada = await dados.filter(item => {
@@ -204,9 +208,6 @@ app.post("/marcas/listaModelos", async (req, res) => {
 
 })
 
-
-
-
 async function readFile() {
 
     const dados = await fs.readFile("./car-list.json");
@@ -214,13 +215,6 @@ async function readFile() {
 
     return dados;
 }
-
-
-
-
-
-
-
 
 
 app.listen(3333, () => { console.log("Api online - Port 3333") })
