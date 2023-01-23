@@ -121,7 +121,20 @@ export async function deleteOrder(req, res) {
 
 }
 
+export async function consultarOrder(req, res) {
 
+    const { id } = req.body;
+
+    if (dados.pedidos.find(pedidos => pedidos.id === id)) {
+
+        return res.json(dados.pedidos[id-1])
+
+    } else {
+        console.log("Pedido não encontrado");
+        return res.status(400).send("Not Found");
+    }
+
+}
 
 
 
