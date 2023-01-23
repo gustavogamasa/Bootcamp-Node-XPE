@@ -77,9 +77,9 @@ export async function deliverOrder(req, res) {
         dados.pedidos[(id - 1)] = ({
 
             id: id,
-            cliente: dados.pedidos[(id-1)].cliente,
-            produto: dados.pedidos[(id-1)].produto,
-            valor: dados.pedidos[(id-1)].valor,
+            cliente: dados.pedidos[(id - 1)].cliente,
+            produto: dados.pedidos[(id - 1)].produto,
+            valor: dados.pedidos[(id - 1)].valor,
             entregue: true,
             timestamp: dados.pedidos[(id - 1)].timestamp
 
@@ -95,6 +95,33 @@ export async function deliverOrder(req, res) {
     }
 
 }
+
+export async function deleteOrder(req, res) {
+
+    const { id } = req.body;
+
+    if (dados.pedidos.filter(pedidos => pedidos.id === id)) {
+
+        const filtered = await dados.pedidos.filter(pedido => {
+
+            if (pedido.id != id) return pedido;
+        });
+
+        dados.pedidos = filtered;
+
+        await fs.writeFile("./db/pedidos.json", JSON.stringify(dados));
+        console.log("Pedido excluido");
+
+        return res.json(dados.pedidos[id - 1])
+
+    } else {
+        console.log("Pedido não encontrado");
+        return res.status(400).send("Not Found");
+    }
+
+}
+
+
 
 
 
