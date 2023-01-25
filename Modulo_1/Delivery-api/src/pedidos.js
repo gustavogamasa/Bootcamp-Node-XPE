@@ -145,7 +145,7 @@ export async function totalCliente(req, res) {
 
         try {
 
-            if ((pedido.cliente).toLowerCase() == cliente.toLowerCase()) {
+            if ((pedido.cliente).toLowerCase() == cliente.toLowerCase() && pedido.entregue === true) {
                 return pedido;
             }
 
@@ -162,7 +162,7 @@ export async function totalCliente(req, res) {
         }
     })
 
-    const total = valores.reduce((accumulator, current) => accumulator + current);
+    const total = valores.reduce((accumulator, current) => accumulator + current, 0);
 
     return res.json(total)
 
