@@ -168,8 +168,49 @@ export async function totalCliente(req, res) {
 
 
 }
+export async function totalProduto(req, res) {
+
+    const { produto } = req.body;
+
+    const pedidos = await dados.pedidos.filter(pedido => {
+
+        try {
+
+            if ((pedido.produto).toLowerCase() == produto.toLowerCase() && pedido.entregue === true) {
+                return pedido;
+            }
+
+        } catch (error) {
+            console.log("Pedido " + pedido.id + " sem cliente");
+        }
+
+    }) // FILTER pedido
+
+    const valores = await pedidos.map(item => {
+        if (item.valor) {
+            console.log(item.valor);
+            return item.valor;
+        }
+    })
+
+    const total = valores.reduce((accumulator, current) => accumulator + current, 0);
+
+    return res.json(total)
+
+
+}
 
 export async function prodMaisVendidos(req, res) {
+
+    let mucarela = 0;
+    let napolitana = 0;
+    let pepperoni = 0;
+    let atum = 0;
+    let calabresa = 0;
+    let moda = 0;
+    let frango = 0;
+
+
 
     const todosProdutos = await dados.pedidos.map(pedido => {
 
@@ -180,23 +221,39 @@ export async function prodMaisVendidos(req, res) {
         }
     })
 
-    const resumo = [prod, qtd];
 
-    todosProdutos.forEach(item => {
+    await todosProdutos.map(pedido => {
 
-        if(resumo.includes(item)){
-            
-            
+        console.log(pedido);
 
-        } else {
-            
-            resumo.push({produto: item, qtd: 1})
-        }
-        
-    });
+        if (pedido === "Pizza Muçarela") mucarela++;
+        if (pedido === "Pizza Napolitana") napolitana++;
+        if (pedido === "Pizza Pepperoni") pepperoni++;
+        if (pedido === "Pizza Atum") atum++;
+        if (pedido === "Pizza Calabresa") calabresa++;
+        if (pedido === "Pizza a Moda") moda++;
+        if (pedido === "Pizza Frango com Catupiry") frango++;
 
 
-    return res.json(resumo)
+
+    })
+
+    const resultado = ({
+        mucarela: mucarela,
+        napolitana: napolitana,
+        pepperoni: pepperoni,
+        atum: atum,
+        calabresa: calabresa,
+        moda: moda,
+        frango: frango
+
+    })
+
+
+
+
+
+    return res.json(resultado)
 
 }
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { consultarOrder, createOrder, deleteOrder, deliverOrder, listAll, prodMaisVendidos, totalCliente, updateOrder } from "../src/pedidos.js";
+import { consultarOrder, createOrder, deleteOrder, deliverOrder, listAll, prodMaisVendidos, totalCliente, totalProduto, updateOrder } from "../src/pedidos.js";
 
 
 
@@ -12,6 +12,7 @@ router.put("/updateOrder", updateOrder)
 router.put("/deliverOrder", deliverOrder)
 router.get("/consultarOrder", consultarOrder)
 router.get("/totalCliente", totalCliente)
+router.get("/totalProduto", totalProduto)
 router.get("/prodMaisVendidos", prodMaisVendidos)
 
 
