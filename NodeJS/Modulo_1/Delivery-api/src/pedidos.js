@@ -210,8 +210,6 @@ export async function prodMaisVendidos(req, res) {
     let moda = 0;
     let frango = 0;
 
-
-
     const todosProdutos = await dados.pedidos.map(pedido => {
 
         try {
@@ -222,9 +220,7 @@ export async function prodMaisVendidos(req, res) {
     })
 
 
-    await todosProdutos.map(pedido => {
-
-        console.log(pedido);
+    todosProdutos.map(pedido => {
 
         if (pedido === "Pizza Muçarela") mucarela++;
         if (pedido === "Pizza Napolitana") napolitana++;
@@ -233,8 +229,6 @@ export async function prodMaisVendidos(req, res) {
         if (pedido === "Pizza Calabresa") calabresa++;
         if (pedido === "Pizza a Moda") moda++;
         if (pedido === "Pizza Frango com Catupiry") frango++;
-
-
 
     })
 
